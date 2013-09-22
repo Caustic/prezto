@@ -10,53 +10,52 @@
 # Load dependencies.
 pmodload 'helper' 'spectrum'
 
-# Correct commands.
-setopt CORRECT
+
+setopt autonamedirs
+unsetopt cdable_vars
+
+# don't correct commands.
+unsetopt correct
 
 #
 # Aliases
 #
 
-# Disable correction.
-alias ack='nocorrect ack'
-alias cd='nocorrect cd'
-alias cp='nocorrect cp'
-alias ebuild='nocorrect ebuild'
-alias gcc='nocorrect gcc'
-alias gist='nocorrect gist'
-alias grep='nocorrect grep'
-alias heroku='nocorrect heroku'
-alias ln='nocorrect ln'
-alias man='nocorrect man'
-alias mkdir='nocorrect mkdir'
-alias mv='nocorrect mv'
-alias mysql='nocorrect mysql'
-alias rm='nocorrect rm'
-
 # Disable globbing.
 alias fc='noglob fc'
 alias find='noglob find'
 alias ftp='noglob ftp'
-alias history='noglob history'
+alias history='noglob history 1'
 alias locate='noglob locate'
 alias rake='noglob rake'
 alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias sftp='noglob sftp'
 
-# Define general aliases.
-alias _='sudo'
-alias b='${(z)BROWSER}'
+# Define aliases.
 alias cp="${aliases[cp]:-cp} -i"
-alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias ln="${aliases[ln]:-ln} -i"
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias mv="${aliases[mv]:-mv} -i"
 alias p='${(z)PAGER}'
-alias po='popd'
-alias pu='pushd'
-alias rm="${aliases[rm]:-rm} -i"
 alias type='type -a'
+
+alias s="source"
+alias c="clear"
+alias vim="vim -O"
+alias vi="vim -O"
+alias py=$(which python)
+alias fdate="date +'%y-%m-%d'"
+alias gdb="gdb -q"
+alias upgrade="sudo apt-get update && sudo apt-get upgrade"
+alias tmux="tmux -2"
+alias se="source env.sh"
+
+# Vim pager
+if [[ -s "/usr/share/vim/vim73/macros/less.sh" ]]
+then
+    alias less="/usr/share/vim/vim73/macros/less.sh"
+fi
 
 # ls
 if is-callable 'dircolors'; then
@@ -151,7 +150,7 @@ alias http-serve='python -m SimpleHTTPServer'
 #
 
 # Makes a directory and changes to it.
-function mkdcd {
+function mkcd {
   [[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
 }
 
